@@ -55,7 +55,7 @@
     "build:ui": "pnpm --prefix ./webview-ui run build",
     "watch:ui": "pnpm --prefix ./webview-ui run watch",
     "vscode:prepublish": "pnpm run compile",
-    "compile": "tsc -p ./",
+    "compile": "tsc -p ./", 
     "watch:extension": "tsc -watch -p ./",
     "watch:all": "concurrently \"pnpm watch:ui\" \"pnpm watch:extension\"",
     "watch": "pnpm watch:extension",
