@@ -4,43 +4,61 @@ import { vscode } from "./utilities/vscode";
 import tunes,{Tune} from "./utilities/tunes"
 import TuneTile from './components/Tile';
 const App = () => {
-  const [config, setConfig] = useState(window.config);
+  const [isPlaying, setIsPlaying] = useState<string | null>(null);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
 
   function onSendMessage() {
-    vscode.postMessage({ type: "onMessageSend", value: "message" });
+    vscode.postMessage({ type: "stopTune", value: "message" });
   }
 
-  useEffect(() => {
-    window.addEventListener("message", (event) => {
-      const message = event.data;
-      switch (message.type) {
-        case "onConfigChange":
-          setConfig(message.value);
-          break;
-      }
-    });
-  }, []);
+  
+useEffect(() => {
+  // Handle messages from the extension
+  window.addEventListener('message', event => {
+    const message = event.data;
+    
+    switch (message.type) {
+      case 'audioStarted':
+        setCurrentlyPlaying(message.title);
+        break;
+      case 'audioStopped':
+      case 'audioEnded':
+        setCurrentlyPlaying(null);
+        break;
+    }
+  });
+}, []);
 
-  const handleTileClick = (title:string) => {
-    vscode.postMessage({
-      type: "selectTune",
-      value: title
-    });
-  };
+window.addEventListener('message', (event) => {
+  const { type, uri } = event.data;
+  if (type === 'playAudio') {
+    const audio = new Audio(uri);
+    audio.play();
+  }
+});
+
+const handleTileClick = (title: string) => {
+  if (currentlyPlaying === title) {
+    vscode.postMessage({ type: "stopAudio" });
+  } else {
+    vscode.postMessage({ type: "playTune", title: title });
+  }
+};
   return (
-    <main className="p-6">
-      <h1 className="text-2xl font-bold mb-8 text-center">Loopify</h1>
-      <div className="grid grid-cols-3 gap-4">
+    <main className="">
+      <h1 className="w-full mb-8 text-2xl font-bold text-center">Loopify</h1>
+      <div className="flex items-center flex-wrap h-[50vh] border-4 border-red-900 justify-center gap-4  ">
         {tunes.map((tune:Tune, index) => (
           <TuneTile
             key={index}
             icon={tune.icon}
             title={tune.title}
             onClick={() => handleTileClick(tune.title)}
+            isPlaying={currentlyPlaying === tune.title}
           />
         ))}
       </div>
-      <VSCodeButton onClick={onSendMessage}>Send Message</VSCodeButton> 
+      <VSCodeButton onClick={onSendMessage}>stop Message</VSCodeButton> 
     </main>
   );
 };

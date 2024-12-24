@@ -1,52 +1,120 @@
 import * as vscode from "vscode";
+import * as path from "path";
 import { getUri } from "../utilities/getUri";
 import { requireModule } from "../utilities/require-config";
 
+
 export class SidebarProvider implements vscode.WebviewViewProvider {
-  _view?: vscode.WebviewView;
-  _doc?: vscode.TextDocument;
+   _view?: vscode.WebviewView;
+   audioContext?: AudioContext;
+   currentSource?: AudioBufferSourceNode;
 
   constructor(private readonly _extensionUri: vscode.Uri) {}
 
-  public resolveWebviewView(webviewView: vscode.WebviewView) {
+  public resolveWebviewView(
+    webviewView: vscode.WebviewView,
+    context: vscode.WebviewViewResolveContext,
+    _token: vscode.CancellationToken,
+  ) {
     this._view = webviewView;
 
     webviewView.webview.options = {
-      // Allow scripts in the webview
       enableScripts: true,
-
       localResourceRoots: [this._extensionUri],
     };
 
     webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 
-    // Listen for messages from the Sidebar component and execute action
-    webviewView.webview.onDidReceiveMessage(async (data) => {
-      console.log("data", data);
-      switch (data.type) {
+    // Handle messages from webview
+    webviewView.webview.onDidReceiveMessage(async (message) => {
+      console.log("message",message);
+      switch (message.type) {
         case "onMessageSend": {
-          if (!data.value) {
+          if (!message.value) {
             return;
           }
           vscode.window.showInformationMessage(
-            `Message from sidebar: ${data.value}`
+            `Message from sidebar: ${message.value}`
           );
           break;
         }
-        case "onInfo": {
-          if (!data.value) {
-            return;
+        case "playTune": {
+          try {
+            const audioFilePath = path.join(
+              this._extensionUri.fsPath,
+              "media",
+              "audio",
+              `${message.title}.mp3`
+            );
+            // const audioData = await vscode.workspace.fs.readFile(
+            //   vscode.Uri.file(audioFilePath)
+            // );
+
+            // // Initialize AudioContext if not exists
+            // if (!this.audioContext) {
+            //   this.audioContext = new AudioContext();
+            // }
+
+            // // Stop current playing audio if any
+            // if (this.currentSource) {
+            //   this.currentSource.stop();
+            // }
+
+            // // Create new audio buffer
+            // const arrayBuffer = audioData.buffer;
+            // const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+
+            // // Create and configure source
+            // this.currentSource = this.audioContext.createBufferSource();
+            // this.currentSource.buffer = audioBuffer;
+            // this.currentSource.connect(this.audioContext.destination);
+
+            // // Handle when audio finishes playing
+            // this.currentSource.onended = () => {
+            //   this.currentSource = undefined;
+            //   this._view?.webview.postMessage({ 
+            //     type: "audioEnded", 
+            //     title: message.title 
+            //   });
+            // };
+
+            // // Play audio
+            // this.currentSource.start(0);
+
+            // // Notify webview that audio started playing
+            // this._view?.webview.postMessage({
+            //   type: "audioStarted",
+            //   title: message.title,
+            // });
+            // this._view?.webview.postMessage({
+            //   type: "playTune",
+            //   title: message.title,
+            //   audioData: audioData.buffer, 
+            // });
+            const fileUri = webviewView.webview.asWebviewUri(vscode.Uri.file(audioFilePath));
+              this._view?.webview.postMessage({
+              type: "playAudio",
+              uri: fileUri.toString(),
+            });
+          } catch (error: any) {
+            vscode.window.showErrorMessage(`Error playing audio: ${error.message}`);
           }
-          vscode.window.showInformationMessage(data.value);
           break;
         }
-        case "onError": {
-          if (!data.value) {
-            return;
-          }
-          vscode.window.showErrorMessage(data.value);
+
+        // case "stopAudio": {
+        //   if (this.currentSource) {
+        //     this.currentSource.stop();
+        //     this.currentSource = undefined;
+        //     this._view?.webview.postMessage({ type: "audioStopped" });
+        //   }
+        //   break;
+        // }
+        case "stopAudio": {
+          this._view?.webview.postMessage({ type: "stopAudio" });
           break;
         }
+        
       }
     });
   }
@@ -56,7 +124,6 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
   }
 
   private _getHtmlForWebview(webview: vscode.Webview) {
-    // The CSS file from the React build output
     const stylesUri = getUri(webview, this._extensionUri, [
       "webview-ui",
       "build",

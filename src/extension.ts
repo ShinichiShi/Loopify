@@ -2,14 +2,19 @@ import { commands, ExtensionContext, window } from "vscode";
 import { SidebarProvider } from "./panels/SidebarProvider";
 
 export function activate(context: ExtensionContext) {
-  // Register the Sidebar Panel
+  console.log('Extension is activating...'); // Add this for debugging
+
   const sidebarProvider = new SidebarProvider(context.extensionUri);
-  context.subscriptions.push(
-    window.registerWebviewViewProvider("myextension-sidebar", sidebarProvider)
+  
+  // Register the provider
+  const providerRegistration = window.registerWebviewViewProvider(
+    "myextension-sidebar",
+    sidebarProvider
   );
+  
+  context.subscriptions.push(providerRegistration);
 
-  // Add command to the extension context
-
+  // Register commands
   context.subscriptions.push(
     commands.registerCommand("myextension.sayhello", () => {
       window.showInformationMessage("Hello World!");
@@ -18,12 +23,18 @@ export function activate(context: ExtensionContext) {
 
   context.subscriptions.push(
     commands.registerCommand("myextension.askquestion", async () => {
-      let response = await window.showInformationMessage("How are you doing?", "Good", "Bad");
+      let response = await window.showInformationMessage(
+        "How are you doing?",
+        "Good",
+        "Bad"
+      );
       if (response === "Bad") {
         window.showInformationMessage("I'm sorry");
       }
     })
   );
 
-  // context.subscriptions.push(showHelloWorldCommand);
+  console.log('Extension activated'); // Add this for debugging
 }
+
+export function deactivate() {}

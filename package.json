@@ -80,5 +80,10 @@
   },
   "pnpm": {
     "patchedDependencies": {}
-  }
+  },
+  "files":[
+    "out",
+    "dist",
+    "media"
+  ]
 }

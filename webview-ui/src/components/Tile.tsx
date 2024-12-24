@@ -1,12 +1,20 @@
-const TuneTile = ({ icon, title, onClick }:any) => (
-    <div 
-      className="p-6 bg-zinc-900 rounded-lg cursor-pointer hover:bg-zinc-800 transition-colors"
-      onClick={onClick}
-    >
-      <div className="flex flex-col items-center gap-3">
-        {icon}
-        <span className="text-sm text-blue-300">{title}</span>
-      </div>
-    </div>
+interface TuneTileProps {
+  icon: any;
+  title: string;
+  onClick: () => void;
+  isPlaying: boolean;
+}
+
+const TuneTile: React.FC<TuneTileProps>  = ({ icon, title, onClick,isPlaying }) => (
+         <div 
+         className={`p-4 cursor-pointer border rounded-lg ${isPlaying ? 'bg-blue-100' : ''}`}
+         onClick={onClick}
+        >
+         <div className="flex items-center gap-2">
+             {icon}
+             <span>{title}</span>
+             {isPlaying && <span>▶️</span>}
+         </div>
+        </div>
   );
 export default TuneTile;  
