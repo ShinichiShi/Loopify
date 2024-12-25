@@ -1,38 +1,45 @@
-# Hello World (React + Vite)
+# Loopify
 
-This is an implementation of the default [Hello World](https://github.com/microsoft/vscode-webview-ui-toolkit-samples/tree/main/default/hello-world) sample extension that demonstrates how to set up and use a [React](https://reactjs.org/) + [Vite](https://vitejs.dev/) + [Webview UI Toolkit](https://github.com/microsoft/vscode-webview-ui-toolkit) webview sidebar extension.
+**Loopify** lets you create, manage, and remix music loops directly in VS Code. With this extension, you can play, edit, and customize your tunes in an intuitive interface, enhancing your workflow without leaving your favorite code editor.
 
+### Features
 
-## Documentation
+- **Play and Remix Music Tunes**: Manage audio loops with ease, adjusting playback and volume.
+- **Interactive Visuals**: Intuitive UI built with React and Vite for a seamless user experience.
+- **Quick Controls**:
+  - Adjust volume dynamically with sliders.
+  - Stop all audio loops with a single click.
+- **Spotify Integration**: Play your Spotify tracks directly within VS Code (coming soon).
 
-For a deeper dive into how this sample works, read the guides below.
+### Supported File Types
+Currently supports custom audio loops added to the extension. The files are of mostly mp3 type.
 
-- [Extension structure](./docs/extension-structure.md)
-- [Extension commands](./docs/extension-commands.md)
-- [Extension development cycle](./docs/extension-development-cycle.md)
+### Available on Marketplace
+[Loopify on Visual Studio Marketplace](#)  
+Repository: [GitHub Link](https://github.com/ShinichiShi/Loopify)
 
-## Run The Sample
+---
 
-```bash
-# Copy sample extension locally
-git clone https://github.com/anubra266/vscode-sidebar-extension.git hello world
+## How to Use
 
-# Navigate into sample directory
-cd hello-world
+### Adding and Playing Tunes
+1. Launch the Loopify panel from the VS Code sidebar.
+2. Add your tunes to the loop manager.
+3. Click on a tune tile to play or stop it.
+4. Adjust the volume using the slider when a tune is playing.
 
-# Install dependencies for both the extension and webview UI source code
-pnpm run install:all
+### Stopping All Tunes
+- Click the "Stop All" button in the top-right corner to stop all audio loops instantly.
 
-# Build extension UI source code in watch mode
-pnpm run watch:ui
+### Spotify Integration
+- Soon, you will be able to link your Spotify account and play your favorite tracks right from VS Code. Stay tuned for updates!
 
-# Open sample in VS Code
-code .
-```
+---
+### Contributions: 
 
-Once the sample is open inside VS Code you can run the extension by doing the following:
+Check out the [CONTRIBUTING.md](CONTRIBUTING.md) file for more info on how to setup and contribute to this project.
 
-1. Press `F5` to open a new Extension Development Host window
-2. Inside the host window, click the new panda icon
+---
 
-
+### License
+This project is licensed under the [MIT License](LICENSE).
