@@ -13,6 +13,7 @@
     "@vscode/webview-ui-toolkit": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^5.4.0",
     "webview-ui": "link:webview-ui"
   },
   "devDependencies": {

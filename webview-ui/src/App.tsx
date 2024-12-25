@@ -1,8 +1,9 @@
 import { VSCodeButton } from "@vscode/webview-ui-toolkit/react";
 import { useEffect, useRef, useState } from "react";
 import { vscode } from "./utilities/vscode";
-import tunes, { Tune } from "./utilities/tunes";
+import tunes from "./utilities/tunes";
 import TuneTile from './components/Tile';
+import { FaStop } from 'react-icons/fa';
 
 const App = () => {
   const [playingTunes, setPlayingTunes] = useState<Set<string>>(new Set());
@@ -31,15 +32,6 @@ const App = () => {
       }
     };
     window.addEventListener("message", messageHandler);
-    return () => {
-      // window.removeEventListener("message", messageHandler);
-      // audioElementsRef.current.forEach(audio => {
-      //   audio.pause();
-      //   audio.currentTime = 0;
-      // });
-      // audioElementsRef.current.clear();
-      // setPlayingTunes(new Set());
-    };
   }, [volumes]);
 
   const handleStopAudio = (title: string) => {
@@ -84,46 +76,60 @@ const App = () => {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-4 bg-black">
-    <h1 className="w-full mb-8 text-2xl font-bold text-center text-lime-300">Loopify</h1>
-    
-    <div className="flex items-center flex-wrap p-4 
-      w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] 
-      h-auto min-h-[50vh] 
-      text-lime-300 border-4 border-cyan-200 
-      justify-center gap-4 rounded-lg">
-      
-      {tunes.map((tune, index) => (
-        <div key={index} className="flex flex-col items-center gap-2">
-          <TuneTile
-            icon={tune.icon}
-            title={tune.title}
-            onClick={() => handleTileClick(tune.title)}
-            isPlaying={playingTunes.has(tune.title)}
-          />
-          
-          {playingTunes.has(tune.title) && (
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volumes.get(tune.title) ?? 1}
-              onChange={(e) => handleVolumeChange(tune.title, parseFloat(e.target.value))}
-              className="w-24 accent-lime-300"
-            />
-          )}
-        </div>
-      ))}
+    <main className="flex flex-col items-center w-full min-h-screen bg-black">
+    <div className="flex items-center justify-center w-full">
+      <h1 className="text-2xl font-bold text-lime-300">Loopify</h1>
     </div>
-    
-    <div className="mt-6">
-      <button
+    {playingTunes.size != 0 && <button
         onClick={stopAllAudio}
-        className="px-4 py-2 text-white transition-colors bg-red-500 rounded hover:bg-red-600"
+        className="flex items-center self-end justify-center p-3 m-4 text-white transition-colors bg-red-500 rounded-full hover:bg-red-600"
       >
-        Stop All
-      </button>
+        <FaStop/>
+      </button>}
+      <div className="relative w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] mx-auto">
+      <div className="absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-black to-transparent" />
+      <div className="absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-black to-transparent" />
+      
+      <div className="flex items-start flex-wrap p-1
+        h-[70vh] overflow-y-auto
+        text-lime-300 border-4 border-cyan-200 
+        justify-center gap-4 rounded-lg
+        scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-transparent
+        hover:scrollbar-thumb-lime-400  
+        w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] 
+       min-h-[50vh] my-20
+      ">
+        
+        <div className="flex flex-wrap items-center justify-center gap-4 p-2">
+          {tunes.map((tune, index) => (
+            <div key={index} className="flex flex-col items-center gap-2">
+              <TuneTile
+                icon={tune.icon}
+                title={tune.title}
+                onClick={() => handleTileClick(tune.title)}
+                isPlaying={playingTunes.has(tune.title)}
+              />
+              
+              {playingTunes.has(tune.title) && (
+                <div className="relative w-32 group">
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value={volumes.get(tune.title) ?? 1}
+                    onChange={(e) => handleVolumeChange(tune.title, parseFloat(e.target.value))}
+                    className="w-full h-2 transition-all duration-200 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-300"
+                  />
+                  <div className="absolute left-0 text-xs transition-opacity opacity-0 -bottom-5 group-hover:opacity-100 text-lime-300">
+                    {Math.round((volumes.get(tune.title) ?? 1) * 100)}%
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </main>
   );

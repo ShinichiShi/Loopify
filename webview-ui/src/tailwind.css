@@ -3,13 +3,8 @@
 @tailwind utilities; 
 body {
 	background-color: transparent;
-}
-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .token-switch {
