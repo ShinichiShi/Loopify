@@ -27,7 +27,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 
     // Handle messages from webview
     webviewView.webview.onDidReceiveMessage(async (message) => {
-      console.log("message",message);
+      console.log("message", message);
       switch (message.type) {
         case "onMessageSend": {
           if (!message.value) {
@@ -46,75 +46,26 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
               "audio",
               `${message.title}.mp3`
             );
-            // const audioData = await vscode.workspace.fs.readFile(
-            //   vscode.Uri.file(audioFilePath)
-            // );
-
-            // // Initialize AudioContext if not exists
-            // if (!this.audioContext) {
-            //   this.audioContext = new AudioContext();
-            // }
-
-            // // Stop current playing audio if any
-            // if (this.currentSource) {
-            //   this.currentSource.stop();
-            // }
-
-            // // Create new audio buffer
-            // const arrayBuffer = audioData.buffer;
-            // const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
-
-            // // Create and configure source
-            // this.currentSource = this.audioContext.createBufferSource();
-            // this.currentSource.buffer = audioBuffer;
-            // this.currentSource.connect(this.audioContext.destination);
-
-            // // Handle when audio finishes playing
-            // this.currentSource.onended = () => {
-            //   this.currentSource = undefined;
-            //   this._view?.webview.postMessage({ 
-            //     type: "audioEnded", 
-            //     title: message.title 
-            //   });
-            // };
-
-            // // Play audio
-            // this.currentSource.start(0);
-
-            // // Notify webview that audio started playing
-            // this._view?.webview.postMessage({
-            //   type: "audioStarted",
-            //   title: message.title,
-            // });
-            // this._view?.webview.postMessage({
-            //   type: "playTune",
-            //   title: message.title,
-            //   audioData: audioData.buffer, 
-            // });
-            const fileUri = webviewView.webview.asWebviewUri(vscode.Uri.file(audioFilePath));
-              this._view?.webview.postMessage({
+            const fileUri = webviewView.webview.asWebviewUri(
+              vscode.Uri.file(audioFilePath)
+            );
+            this._view?.webview.postMessage({
               type: "playAudio",
               uri: fileUri.toString(),
+              title: message.title  
             });
           } catch (error: any) {
             vscode.window.showErrorMessage(`Error playing audio: ${error.message}`);
           }
           break;
         }
-
-        // case "stopAudio": {
-        //   if (this.currentSource) {
-        //     this.currentSource.stop();
-        //     this.currentSource = undefined;
-        //     this._view?.webview.postMessage({ type: "audioStopped" });
-        //   }
-        //   break;
-        // }
         case "stopAudio": {
-          this._view?.webview.postMessage({ type: "stopAudio" });
+          this._view?.webview.postMessage({ 
+            type: "stopAudio",
+            title: message.title  
+          });
           break;
         }
-        
       }
     });
   }

@@ -6,7 +6,6 @@ export function activate(context: ExtensionContext) {
 
   const sidebarProvider = new SidebarProvider(context.extensionUri);
   
-  // Register the provider
   const providerRegistration = window.registerWebviewViewProvider(
     "myextension-sidebar",
     sidebarProvider
