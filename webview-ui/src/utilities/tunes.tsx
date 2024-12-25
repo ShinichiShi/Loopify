@@ -10,6 +10,7 @@ import {
   GiForest,
   GiWaterfall,
   GiRoad,
+  GiTornado,
   GiFlute,
   GiPendulumSwing,
   GiFootprint,
@@ -62,10 +63,6 @@ interface Tune {
 type TunesArray = Tune[];
 
 const tunes: TunesArray = [
-  {
-    title: "sample",
-    icon: <BsMusicNote className="w-8 h-8" />
-  },
   {
     title: "rain",
     icon: <BsCloudRain className="w-8 h-8" />
@@ -184,7 +181,7 @@ const tunes: TunesArray = [
   },
   {
     title: "storm",
-    icon: <WiStormWarning className="w-8 h-8" />
+    icon: <GiTornado className="w-8 h-8" />
   },
   {
     title: "telephone",

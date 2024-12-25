@@ -67,19 +67,7 @@ const TuneTile: React.FC<TuneTileProps> = ({ icon, title, onClick, isPlaying }) 
       </span>
       </div>
 
-      {isPlaying && (
-        <div className="absolute bottom-0 left-0 right-0 h-1">
-          <div 
-            className="h-full"
-            style={{
-              backgroundColor: randomColor,
-              width: '100%',
-              borderBottomLeftRadius: '1rem',
-              borderBottomRightRadius: '1rem',
-            }}
-          />
-        </div>
-      )}
+      
     </div>
   );
 };

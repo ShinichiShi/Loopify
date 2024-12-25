@@ -10,41 +10,41 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:myextension.sayhello",
-    "onView:myextension-sidebar",
-    "onCommand:myextension.askquestion"
+    "onCommand:loopify.sayhello",
+    "onView:loopify-sidebar",
+    "onCommand:loopify.askquestion"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "myextension.sayhello",
-        "category": "MyExtension",
+        "command": "loopify.sayhello",
+        "category": "Loopify",
         "title": "Say hello"
       },
       {
-        "command": "myextension.askquestion",
-        "category": "MyExtension",
+        "command": "loopify.askquestion",
+        "category": "Loopify",
         "title": "Ask question"
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "myextension-sidebar-view",
-          "title": "MyExtension",
+          "id": "loopify-sidebar-view",
+          "title": "Loopify",
           "icon": "assets/icon.svg"
         }
       ]
     },
     "views": {
-      "myextension-sidebar-view": [
+      "loopify-sidebar-view": [
         {
           "type": "webview",
-          "id": "myextension-sidebar",
-          "name": "MyExtension",
+          "id": "loopify-sidebar",
+          "name": "Loopify",
           "icon": "assets/icon.svg",
-          "contextualTitle": "MyExtension"
+          "contextualTitle": "Music Encoded"
         }
       ]
     }

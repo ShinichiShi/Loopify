@@ -7,7 +7,7 @@ export function activate(context: ExtensionContext) {
   const sidebarProvider = new SidebarProvider(context.extensionUri);
   
   const providerRegistration = window.registerWebviewViewProvider(
-    "myextension-sidebar",
+    "loopify-sidebar",
     sidebarProvider
   );
   
@@ -15,13 +15,13 @@ export function activate(context: ExtensionContext) {
 
   // Register commands
   context.subscriptions.push(
-    commands.registerCommand("myextension.sayhello", () => {
+    commands.registerCommand("loopify.sayhello", () => {
       window.showInformationMessage("Hello World!");
     })
   );
 
   context.subscriptions.push(
-    commands.registerCommand("myextension.askquestion", async () => {
+    commands.registerCommand("loopify.askquestion", async () => {
       let response = await window.showInformationMessage(
         "How are you doing?",
         "Good",
