@@ -112,7 +112,7 @@ const App = () => {
             key={index} 
             className="flex flex-col items-center w-26 h-26" 
           >
-              <div className=""> {/* Takes available space for tile */}
+              <div>
                 <TuneTile
                   icon={tune.icon}
                   title={tune.title}

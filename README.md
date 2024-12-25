@@ -36,5 +36,3 @@ Once the sample is open inside VS Code you can run the extension by doing the fo
 2. Inside the host window, click the new panda icon
 
 
-- loopify icon 
-- svg for extension bar

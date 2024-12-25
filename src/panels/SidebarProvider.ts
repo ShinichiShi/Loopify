@@ -25,7 +25,6 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 
     webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 
-    // Handle messages from webview
     webviewView.webview.onDidReceiveMessage(async (message) => {
       console.log("message", message);
       switch (message.type) {
@@ -81,7 +80,6 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
       "assets",
       "index.css",
     ]);
-    // The JS file from the React build output
     const scriptUri = getUri(webview, this._extensionUri, [
       "webview-ui",
       "build",
@@ -101,7 +99,6 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
       config = requireModule(configPath);
     } catch (error) {}
 
-    // if (!config) return "Config Not found";
 
     if (workspaceFolder) {
       const watcher = vscode.workspace.createFileSystemWatcher(
@@ -116,7 +113,6 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
       });
     }
 
-    // Tip: Install the es6-string-html VS Code extension to enable code highlighting below
     return /*html*/ `
      <!DOCTYPE html>
      <html lang="en">

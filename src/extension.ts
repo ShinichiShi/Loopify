@@ -2,7 +2,7 @@ import { commands, ExtensionContext, window } from "vscode";
 import { SidebarProvider } from "./panels/SidebarProvider";
 
 export function activate(context: ExtensionContext) {
-  console.log('Extension is activating...'); // Add this for debugging
+  console.log('Extension is activating...'); 
 
   const sidebarProvider = new SidebarProvider(context.extensionUri);
   
@@ -33,7 +33,7 @@ export function activate(context: ExtensionContext) {
     })
   );
 
-  console.log('Extension activated'); // Add this for debugging
+  console.log('Extension activated'); 
 }
 
 export function deactivate() {}
