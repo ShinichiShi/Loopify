@@ -15,7 +15,7 @@
 Currently supports custom audio loops added to the extension. The files are of mostly mp3 type.
 
 ### Available on Marketplace
-[Loopify on Visual Studio Marketplace](#)  
+[Loopify on Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Supreeth.loopify)  
 Repository: [GitHub Link](https://github.com/ShinichiShi/Loopify)
 
 ---

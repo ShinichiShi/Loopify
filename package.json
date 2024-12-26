@@ -2,19 +2,20 @@
   "name": "loopify",
   "displayName": "Loopify",
   "description": "remixing music while coding",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.46.0"
   },
   "categories": [
     "Other"
   ],
+  "icon": "assets/logo.png",
   "activationEvents": [
     "onCommand:loopify.sayhello",
     "onView:loopify-sidebar",
     "onCommand:loopify.askquestion"
   ],
-  "main": "./out/extension.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -49,18 +50,19 @@
       ]
     }
   },
-    "publisher": "Supreeth",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/ShinichiShi/loopify.git"
-    },
-  
+  "publisher": "Supreeth",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ShinichiShi/loopify.git"
+  },
   "scripts": {
     "install:all": "npm install && npm --prefix ./webview-ui install ./webview-ui",
     "start:ui": "pnpm --prefix ./webview-ui run start",
     "build:ui": "pnpm --prefix ./webview-ui run build",
     "watch:ui": "pnpm --prefix ./webview-ui run watch",
-    "vscode:prepublish": "pnpm run compile",
+    "vscode:prepublish": "npm run compile && webpack --mode production",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch",
     "compile": "tsc -p ./",
     "watch:extension": "tsc -watch -p ./",
     "watch:all": "concurrently \"pnpm watch:ui\" \"pnpm watch:extension\"",
@@ -81,19 +83,18 @@
     "standard": "^17.1.2",
     "tape": "^5.9.0",
     "time-require": "^0.1.2",
+    "ts-import": "^4.0.0-beta.6",
+    "ts-loader": "^9.5.1",
     "tsd": "^0.31.2",
     "typescript": "^4.1.3",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4",
     "xo": "^0.60.0"
   },
   "dependencies": {
-    "@vscode/test-electron": "^2.4.1",
-    "ts-import": "4.0.0-beta.6"
+    "@vscode/test-electron": "^2.4.1"
   },
   "pnpm": {
     "patchedDependencies": {}
-  },
-  "files": [
-    "out",
-    "media"
-  ]
+  }
 }

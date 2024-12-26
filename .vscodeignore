@@ -1,0 +1,41 @@
+# Source files
+src/**
+webview-ui/src/**
+webview-ui/public/**
+
+# Build process files
+tsconfig.json
+webview-ui/tsconfig.json
+webview-ui/vite.config.ts
+webview-ui/tailwind.config.js
+webview-ui/postcss.config.js
+.eslintrc.json
+webpack.config.js
+
+# Development directories
+.vscode/**
+.vscode-test/**
+node_modules/**
+webview-ui/node_modules/**
+out/**
+webview-ui/dist/**
+docs/**
+patches/**
+
+# Version control and misc
+.git/**
+.gitignore
+.editorconfig
+.yarnrc
+pnpm-lock.yaml
+package-lock.json
+treestruct.txt
+CONTRIBUTING.md
+**/*.vsix
+**/*.map
+
+# Keep required files
+!dist/**
+!webview-ui/build/**
+!assets/**
+!media/audio/**
