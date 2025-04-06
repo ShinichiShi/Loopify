@@ -10,6 +10,9 @@
   - Adjust volume dynamically with sliders.
   - Stop all audio loops with a single click.
 - **Spotify Integration**: Play your Spotify tracks directly within VS Code (coming soon).
+  
+### Screenshots: 
+![image](https://github.com/user-attachments/assets/d0ff3b64-7fd9-4569-bc60-d8e9569fec61)
 
 ### Supported File Types
 Currently supports custom audio loops added to the extension. The files are of mostly mp3 type.
